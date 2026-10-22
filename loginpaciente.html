@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro — Paciente</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="login-paciente.css">
+  <script src="paciente.js" defer></script>
+</head>
+<body>
+
+  <div class="card">
+    <section class="card-intro">
+      <div class="logo">
+        <i class="ti ti-heart"></i>
+      </div>
+
+      <div class="badge">
+        <i class="ti ti-lock"></i> Dados protegidos e sigilosos
+      </div>
+
+      <h1>Bem-vindo ao nosso espaço</h1>
+      <p class="sub">Preencha seus dados para iniciarmos seu atendimento. Todas as informações são tratadas com total confidencialidade.</p>
+    </section>
+
+    <div class="card-content">
+      <form class="patient-form" id="form-paciente" novalidate>
+        <p class="section-label">Identificação</p>
+
+        <div class="field field-wide">
+          <label for="nome_paciente">Nome completo</label>
+          <input id="nome_paciente" name="nome_paciente" type="text" placeholder="Seu nome" required>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="cpf_paciente">CPF</label>
+            <input id="cpf_paciente" name="cpf_paciente" type="text" placeholder="000.000.000-00" maxlength="14" required>
+          </div>
+          <div class="field">
+            <label for="data_nascimento_paciente">Data de nascimento</label>
+            <input id="data_nascimento_paciente" name="data_nascimento_paciente" type="date" required>
+          </div>
+        </div>
+
+        <div class="field field-wide">
+          <label for="email_paciente">E-mail</label>
+          <input id="email_paciente" name="email_paciente" type="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="field field-wide">
+          <label for="senha">Senha</label>
+          <div class="password-wrap">
+            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" minlength="8" maxlength="128" required>
+            <button class="password-toggle" id="toggleSenha" type="button" aria-label="Mostrar senha" aria-pressed="false">
+              <i class="ti ti-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          <ul class="password-requirements" aria-label="Requisitos da senha">
+            <li id="req-length"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos 8 caracteres</span></li>
+            <li id="req-uppercase"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos uma letra maiúscula</span></li>
+            <li id="req-special"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos um caractere especial</span></li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="btn" type="submit">Continuar →</button>
+
+        <p class="footer-note" id="msg-status" role="status"></p>
+        <p class="footer-note">
+          Ao continuar, você concorda com nossa <a href="#">política de privacidade</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
