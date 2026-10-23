@@ -1,95 +1,98 @@
-// ─── Máscara CPF ───────────────────────────────────────────────
-document.getElementById('cpf').addEventListener('input', function () {
+const API = "/responsaveis";
+
+const form       = document.getElementById('form-responsavel');
+const cpfInput   = document.getElementById('cpf_responsavel');
+const senhaInput = document.getElementById('senha');
+const msgStatus  = document.getElementById('msg-status');
+
+// ─── Máscara CPF ─────────────────────────────────────────────
+cpfInput.addEventListener('input', function () {
   let v = this.value.replace(/\D/g, '').slice(0, 11);
-  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+  if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
   else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
   else if (v.length > 3) v = v.replace(/(\d{3})(\d{0,3})/, '$1.$2');
   this.value = v;
 });
 
-// ─── Limpa erros ao digitar ────────────────────────────────────
-document.querySelectorAll('input').forEach(input => {
-  input.addEventListener('input', function () {
-    const erro = document.getElementById('erro-' + this.id);
-    if (erro) erro.style.display = 'none';
-    this.style.borderColor = '#FFD0A8';
-  });
-});
-
-// ─── Olhinho (mostrar/ocultar senha) ──────────────────────────
+// ─── Olhinho ─────────────────────────────────────────────────
 function toggleSenha() {
-  const input = document.getElementById('senha');
   const icone = document.getElementById('icone-olho');
-  if (input.type === 'password') {
-    input.type = 'text';
+  if (senhaInput.type === 'password') {
+    senhaInput.type = 'text';
     icone.className = 'ti ti-eye-off';
-    document.getElementById('btn-olho').setAttribute('aria-label', 'Ocultar senha');
-    document.getElementById('btn-olho').setAttribute('aria-pressed', 'true');
   } else {
-    input.type = 'password';
+    senhaInput.type = 'password';
     icone.className = 'ti ti-eye';
-    document.getElementById('btn-olho').setAttribute('aria-label', 'Mostrar senha');
-    document.getElementById('btn-olho').setAttribute('aria-pressed', 'false');
   }
 }
 
-// ─── Requisitos de senha em tempo real ────────────────────────
-document.getElementById('senha').addEventListener('input', function () {
-  const val = this.value;
-
-  const temTamanho   = val.length >= 8 && val.length <= 16;
-  const temMaiuscula = /[A-Z]/.test(val);
-  const temEspecial  = /[!@#$%^&*(),.?":{}|<>_\-]/.test(val);
-
-  marcarRequisito('req-tamanho',   temTamanho);
-  marcarRequisito('req-maiuscula', temMaiuscula);
-  marcarRequisito('req-especial',  temEspecial);
+// ─── Requisitos de senha ─────────────────────────────────────
+senhaInput.addEventListener('input', function () {
+  const v = this.value;
+  marcarRequisito('req-tamanho',   v.length >= 8);
+  marcarRequisito('req-maiuscula', /[A-Z]/.test(v));
+  marcarRequisito('req-especial',  /[!@#$%^&*(),.?":{}|<>_\-]/.test(v));
 });
-
 function marcarRequisito(id, valido) {
-  const el    = document.getElementById(id);
+  const el = document.getElementById(id);
   const icone = el.querySelector('i');
-  if (valido) {
-    el.classList.add('ok');
-    icone.className = 'ti ti-circle-check';
-  } else {
-    el.classList.remove('ok');
-    icone.className = 'ti ti-circle';
+  el.classList.toggle('ok', valido);
+  icone.className = valido ? 'ti ti-circle-check' : 'ti ti-circle';
+}
+
+// ─── Status ──────────────────────────────────────────────────
+function mostrarStatus(texto, erro = false) {
+  msgStatus.textContent = texto;
+  msgStatus.style.color = erro ? '#c0392b' : '#27ae60';
+}
+
+// ─── Envio ───────────────────────────────────────────────────
+form.addEventListener('submit', async function (event) {
+  event.preventDefault();
+  mostrarStatus('');
+
+  // Validação de senha (visual — a coluna senha_hash ainda não existe em
+  // `responsavel`, então NÃO enviamos senha para a API).
+  const senha = senhaInput.value;
+  if (!(senha.length >= 8 && /[A-Z]/.test(senha) && /[!@#$%^&*(),.?":{}|<>_\-]/.test(senha))) {
+    mostrarStatus('A senha não atende aos requisitos.', true);
+    senhaInput.focus();
+    return;
   }
-}
 
-// ─── Mostrar erro nos campos ───────────────────────────────────
-function mostrarErro(id) {
-  const input = document.getElementById(id);
-  const erro  = document.getElementById('erro-' + id);
-  if (input) input.style.borderColor = '#c0392b';
-  if (erro)  erro.style.display = 'block';
-}
+  const payload = {
+    nome_responsavel:            document.getElementById('nome_responsavel').value.trim(),
+    cpf_responsavel:             cpfInput.value.trim(),
+    email_responsavel:           document.getElementById('email_responsavel').value.trim(),
+    data_nascimento_responsavel: document.getElementById('data_nascimento_responsavel').value || null,
+    telefone_responsavel:        document.getElementById('telefone_responsavel').value.trim() || null,
+    endereco_responsavel:        document.getElementById('endereco_responsavel').value.trim() || null,
+  };
 
-// ─── Envio / validação final ───────────────────────────────────
-function entrar() {
-  const nome  = document.getElementById('nome').value.trim();
-  const cpf   = document.getElementById('cpf').value.trim();
-  const idade = document.getElementById('idade').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const senha = document.getElementById('senha').value;
+  try {
+    const resp = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-  const senhaValida =
-    senha.length >= 8 &&
-    senha.length <= 16 &&
-    /[A-Z]/.test(senha) &&
-    /[!@#$%^&*(),.?":{}|<>_\-]/.test(senha);
+    if (resp.status === 201) {
+      const dados = await resp.json();
+      mostrarStatus(`Responsável cadastrado (ID ${dados.id_responsavel}).`);
+      form.reset();
+      return;
+    }
 
-  let valido = true;
-
-  if (!nome)                                  { mostrarErro('nome');  valido = false; }
-  if (cpf.length < 14)                        { mostrarErro('cpf');   valido = false; }
-  if (!idade || idade < 0 || idade > 120)     { mostrarErro('idade'); valido = false; }
-  if (!email.includes('@') || !email.includes('.')) { mostrarErro('email'); valido = false; }
-  if (!senhaValida)                           { mostrarErro('senha'); valido = false; }
-
-  if (!valido) return;
-
-  // Substitua pelo redirecionamento ou chamada de API
-  alert('Cadastro realizado com sucesso! Em breve entraremos em contato.');
-}
+    let detalhe = 'Não foi possível concluir o cadastro.';
+    try {
+      const err = await resp.json();
+      if (typeof err.detail === 'string') detalhe = err.detail;
+      else if (Array.isArray(err.detail)) {
+        detalhe = err.detail.map(e => `${e.loc?.slice(-1)[0] || ''}: ${e.msg}`).join(' · ');
+      }
+    } catch { /* sem JSON */ }
+    mostrarStatus(detalhe, true);
+  } catch {
+    mostrarStatus('Falha de conexão com o servidor.', true);
+  }
+});
