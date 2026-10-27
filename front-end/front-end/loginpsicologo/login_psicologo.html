@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro — Psicólogo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="psico.css">
+  <script src="psico.js" defer></script>
+</head>
+<body>
+
+  <div class="card-externo">
+    <div class="card">
+
+      <div class="painel-esquerdo">
+        <div class="logo"><i class="ti ti-brain"></i></div>
+        <h1>Acesso do psicólogo</h1>
+        <p class="sub">Insira seus dados profissionais para acessar o painel de atendimentos.</p>
+        <div class="badge"><i class="ti ti-shield-check"></i> Área restrita a profissionais</div>
+      </div>
+
+      <div class="painel-direito">
+        <form id="form-psicologo" novalidate>
+
+          <!-- ───────── Dados pessoais ───────── -->
+          <p class="section-label">Dados pessoais</p>
+
+          <div class="field">
+            <label for="nome_psicologo">Nome completo</label>
+            <i class="ti ti-user field-icon"></i>
+            <input id="nome_psicologo" name="nome_psicologo" type="text" placeholder="Seu nome completo" autocomplete="name" required>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="cpf_psicologo">CPF</label>
+              <i class="ti ti-id-badge field-icon"></i>
+              <input id="cpf_psicologo" name="cpf_psicologo" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
+            </div>
+            <div class="field">
+              <label for="rg_psicologo">RG</label>
+              <i class="ti ti-id field-icon"></i>
+              <input id="rg_psicologo" name="rg_psicologo" type="text" placeholder="Número do RG" maxlength="20" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="data_nascimento_psicologo">Data de nascimento</label>
+              <i class="ti ti-calendar field-icon"></i>
+              <input id="data_nascimento_psicologo" name="data_nascimento_psicologo" type="date" autocomplete="bday" required>
+            </div>
+            <div class="field">
+              <label for="telefone_psicologo">Telefone</label>
+              <i class="ti ti-phone field-icon"></i>
+              <input id="telefone_psicologo" name="telefone_psicologo" type="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" autocomplete="tel" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email_psicologo">E-mail profissional</label>
+            <i class="ti ti-mail field-icon"></i>
+            <input id="email_psicologo" name="email_psicologo" type="email" placeholder="seu@email.com" autocomplete="email" required>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- ───────── Registro profissional ───────── -->
+          <p class="section-label">Registro profissional</p>
+
+          <div class="row">
+            <div class="field">
+              <label for="crp_psicologo">CRP</label>
+              <i class="ti ti-certificate field-icon"></i>
+              <input id="crp_psicologo" name="crp_psicologo" type="text" inputmode="numeric" placeholder="00/00000" maxlength="8" required>
+              <p class="crp-hint">Formato: 00/00000</p>
+            </div>
+            <div class="field">
+              <label for="regiao_psicologo">Região de atuação</label>
+              <i class="ti ti-map-pin field-icon"></i>
+              <input id="regiao_psicologo" name="regiao_psicologo" type="text" placeholder="Ex.: Joinville - SC" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="data_formacao_psicologo">Data de formação</label>
+            <i class="ti ti-school field-icon"></i>
+            <input id="data_formacao_psicologo" name="data_formacao_psicologo" type="date" required>
+          </div>
+
+          <div class="field">
+            <label for="area_especialidade">Área de especialidade</label>
+            <i class="ti ti-stethoscope field-icon"></i>
+            <input id="area_especialidade" name="area_especialidade" type="text" placeholder="Ex.: Terapia cognitivo-comportamental" required>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- ───────── Acesso ───────── -->
+          <p class="section-label">Acesso</p>
+
+          <div class="field">
+            <label for="senha">Senha</label>
+            <i class="ti ti-lock field-icon"></i>
+            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" maxlength="128" autocomplete="new-password" required>
+            <button type="button" onclick="toggleSenha()" id="btn-olho" aria-label="Mostrar ou ocultar senha">
+              <i class="ti ti-eye" id="icone-olho"></i>
+            </button>
+            <ul class="requisitos" id="requisitos">
+              <li id="req-tamanho"><i class="ti ti-circle"></i> Pelo menos 8 caracteres</li>
+              <li id="req-maiuscula"><i class="ti ti-circle"></i> Pelo menos 1 letra maiúscula</li>
+              <li id="req-especial"><i class="ti ti-circle"></i> Pelo menos 1 caractere especial</li>
+            </ul>
+          </div>
+
+          <button class="btn" type="submit">cadastrar →</button>
+          <p class="footer-note" style="margin-top:1rem;text-align:center;">
+            Já tem conta? <a href="entrar.html">Entrar</a>
+          </p>
+          <p class="footer-note" id="msg-status" role="status" style="margin-top:1rem;color:#c0392b;font-size:13px;text-align:center;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

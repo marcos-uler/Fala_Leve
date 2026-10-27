@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro — Paciente</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="paciente.js" defer></script>
+</head>
+<body>
+
+  <div class="card">
+    <section class="card-intro">
+      <div class="logo">
+        <i class="ti ti-heart"></i>
+      </div>
+
+      <div class="badge">
+        <i class="ti ti-lock"></i> Dados protegidos e sigilosos
+      </div>
+
+      <h1>Bem-vindo ao nosso espaço</h1>
+      <p class="sub">Preencha seus dados para iniciarmos seu atendimento. Todas as informações são tratadas com total confidencialidade.</p>
+    </section>
+
+    <div class="card-content">
+      <form class="patient-form" id="form-paciente" novalidate>
+
+        <!-- ───────── Identificação ───────── -->
+        <p class="section-label">Identificação</p>
+
+        <div class="field field-wide">
+          <label for="nome_paciente">Nome completo</label>
+          <input id="nome_paciente" name="nome_paciente" type="text" placeholder="Seu nome" autocomplete="name" required>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="cpf_paciente">CPF</label>
+            <input id="cpf_paciente" name="cpf_paciente" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
+          </div>
+          <div class="field">
+            <label for="data_nascimento_paciente">Data de nascimento</label>
+            <input id="data_nascimento_paciente" name="data_nascimento_paciente" type="date" autocomplete="bday" required>
+          </div>
+        </div>
+
+        <div class="field field-wide">
+          <label for="id_responsavel">ID do responsável <span class="optional">(opcional)</span></label>
+          <input id="id_responsavel" name="id_responsavel" type="number" min="1" step="1" inputmode="numeric" placeholder="Somente se houver um responsável">
+        </div>
+
+        <!-- ───────── Tratamento ───────── -->
+        <p class="section-label">Tratamento</p>
+
+        <div class="row">
+          <div class="field">
+            <label for="data_inicio_tratamento">Início do tratamento</label>
+            <input id="data_inicio_tratamento" name="data_inicio_tratamento" type="date" required>
+          </div>
+          <div class="field">
+            <label for="pagamento_paciente">Forma de pagamento</label>
+            <select id="pagamento_paciente" name="pagamento_paciente" required>
+              <option value="" disabled selected>Selecione</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ───────── Contato ───────── -->
+        <p class="section-label">Contato</p>
+
+        <div class="row">
+          <div class="field">
+            <label for="telefone_paciente">Telefone <span class="optional">(opcional)</span></label>
+            <input id="telefone_paciente" name="telefone_paciente" type="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="email_paciente">E-mail</label>
+            <input id="email_paciente" name="email_paciente" type="email" placeholder="seu@email.com" autocomplete="email" required>
+          </div>
+        </div>
+
+        <!-- ───────── Endereço ───────── -->
+        <p class="section-label">Endereço</p>
+
+        <div class="row">
+          <div class="field">
+            <label for="cep_paciente">CEP</label>
+            <input id="cep_paciente" name="cep_paciente" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9" autocomplete="postal-code" required>
+          </div>
+          <div class="field">
+            <label for="bairro_paciente">Bairro</label>
+            <input id="bairro_paciente" name="bairro_paciente" type="text" placeholder="Seu bairro" required>
+          </div>
+        </div>
+
+        <div class="row row-uf">
+          <div class="field">
+            <label for="estado_paciente">Estado</label>
+            <select id="estado_paciente" name="estado_paciente" required>
+              <option value="" disabled selected>UF</option>
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AP">AP</option>
+              <option value="AM">AM</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MT">MT</option>
+              <option value="MS">MS</option>
+              <option value="MG">MG</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PR">PR</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RS">RS</option>
+              <option value="RO">RO</option>
+              <option value="RR">RR</option>
+              <option value="SC">SC</option>
+              <option value="SP">SP</option>
+              <option value="SE">SE</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cidade_paciente">Cidade</label>
+            <input id="cidade_paciente" name="cidade_paciente" type="text" placeholder="Sua cidade" autocomplete="address-level2" required>
+          </div>
+        </div>
+
+        <div class="field field-wide">
+          <label for="rua_paciente">Rua</label>
+          <input id="rua_paciente" name="rua_paciente" type="text" placeholder="Nome da rua" autocomplete="address-line1" required>
+        </div>
+
+        <div class="field field-wide">
+          <label for="endereco_paciente">Endereço (número e complemento)</label>
+          <input id="endereco_paciente" name="endereco_paciente" type="text" placeholder="Ex.: 123, apto 45" autocomplete="address-line2" required>
+        </div>
+
+        <!-- ───────── Acesso ───────── -->
+        <p class="section-label">Acesso</p>
+
+        <div class="field field-wide">
+          <label for="senha">Senha</label>
+          <div class="password-wrap">
+            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" minlength="8" maxlength="128" required>
+            <button class="password-toggle" id="toggleSenha" type="button" aria-label="Mostrar senha" aria-pressed="false">
+              <i class="ti ti-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+          <ul class="password-requirements" aria-label="Requisitos da senha">
+            <li id="req-length"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos 8 caracteres</span></li>
+            <li id="req-uppercase"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos uma letra maiúscula</span></li>
+            <li id="req-special"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos um caractere especial</span></li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="btn" type="submit">Continuar →</button>
+
+        <p class="footer-note" id="msg-status" role="status"></p>
+        <p class="footer-note">
+          Ao continuar, você concorda com nossa <a href="#">política de privacidade</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
