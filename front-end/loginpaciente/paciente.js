@@ -5,6 +5,8 @@ const cpfInput     = document.getElementById('cpf_paciente');
 const senhaInput   = document.getElementById('senha');
 const toggleSenha  = document.getElementById('toggleSenha');
 const msgStatus    = document.getElementById('msg-status');
+const telInput     = document.getElementById('telefone_paciente');
+const cepInput     = document.getElementById('cep_paciente');
 
 // ─── Olhinho ─────────────────────────────────────────────────
 toggleSenha.addEventListener('click', function () {
@@ -23,6 +25,23 @@ cpfInput.addEventListener('input', function () {
   else if (digits.length > 6) out = `${digits.slice(0,3)}.${digits.slice(3,6)}.${digits.slice(6)}`;
   else if (digits.length > 3) out = `${digits.slice(0,3)}.${digits.slice(3)}`;
   this.value = out;
+});
+
+// ─── Máscara telefone ────────────────────────────────────────
+telInput.addEventListener('input', function () {
+  const d = this.value.replace(/\D/g, '').slice(0, 11);
+  let out = d;
+  if (d.length > 10)     out = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  else if (d.length > 6) out = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  else if (d.length > 2) out = `(${d.slice(0,2)}) ${d.slice(2)}`;
+  else if (d.length > 0) out = `(${d}`;
+  this.value = out;
+});
+
+// ─── Máscara CEP ─────────────────────────────────────────────
+cepInput.addEventListener('input', function () {
+  const d = this.value.replace(/\D/g, '').slice(0, 8);
+  this.value = d.length > 5 ? `${d.slice(0,5)}-${d.slice(5)}` : d;
 });
 
 // ─── Requisitos de senha em tempo real ───────────────────────
@@ -63,11 +82,22 @@ form.addEventListener('submit', async function (event) {
   }
 
   // Monta o payload com os NOMES DE CAMPO que o backend espera
+  const valor = id => document.getElementById(id).value.trim();
+
   const payload = {
-    nome_paciente:            document.getElementById('nome_paciente').value.trim(),
+    nome_paciente:            valor('nome_paciente'),
     cpf_paciente:             cpfInput.value.trim(),
-    data_nascimento_paciente: document.getElementById('data_nascimento_paciente').value || null,
-    email_paciente:           document.getElementById('email_paciente').value.trim(),
+    data_nascimento_paciente: valor('data_nascimento_paciente') || null,
+    data_inicio_tratamento:   valor('data_inicio_tratamento') || null,
+    pagamento_paciente:       Number(valor('pagamento_paciente')) || null,
+    telefone_paciente:        telInput.value.trim() || null,
+    email_paciente:           valor('email_paciente'),
+    estado_paciente:          valor('estado_paciente'),
+    cidade_paciente:          valor('cidade_paciente'),
+    bairro_paciente:          valor('bairro_paciente'),
+    rua_paciente:             valor('rua_paciente'),
+    endereco_paciente:        valor('endereco_paciente'),
+    cep_paciente:             cepInput.value.trim(),
     senha:                    senha,
   };
 
@@ -80,9 +110,10 @@ form.addEventListener('submit', async function (event) {
 
     if (resp.status === 201) {
       const dados = await resp.json();
-      mostrarStatus(`Cadastro criado (ID ${dados.id_paciente}). Bem-vindo(a)!`);
+      mostrarStatus('Cadastro criado! Redirecionando para o login...');
       form.reset();
       atualizarRequisitosSenha();
+      setTimeout(() => { window.location.href = 'entrar.html'; }, 1200);
       return;
     }
 
