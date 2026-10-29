@@ -3,186 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro — Responsável</title>
+  <title>Login — Paciente</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
   <link rel="stylesheet" href="responsavel.css">
-  <script src="responsavel.js" defer></script>
 </head>
 <body>
 
   <div class="card-externo">
     <div class="card">
 
+      <!-- PAINEL ESQUERDO -->
       <div class="painel-esquerdo">
-        <div class="logo"><i class="ti ti-heart-handshake"></i></div>
-        <h1>Apoio para alguém</h1>
-        <p class="sub">Cadastre-se como responsável legal para acompanhar o atendimento de quem você cuida.</p>
-        <div class="badge"><i class="ti ti-lock"></i> Dados protegidos e sigilosos</div>
+        <div class="logo">
+          <i class="ti ti-heart"></i>
+        </div>
+        <h1>Bem-vindo ao nosso espaço</h1>
+        <p class="sub">Preencha seus dados para iniciarmos seu atendimento com segurança e cuidado.</p>
+        <div class="badge">
+          <i class="ti ti-lock"></i> Dados protegidos e sigilosos
+        </div>
       </div>
 
+      <!-- PAINEL DIREITO -->
       <div class="painel-direito">
-        <form id="form-responsavel" novalidate>
 
-          <!-- ───────── Identificação ───────── -->
-          <p class="section-label">Identificação</p>
+        <p class="section-label">Identificação</p>
 
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <i class="ti ti-user field-icon"></i>
+          <input id="nome" type="text" placeholder="Seu nome completo">
+          <span class="error" id="erro-nome">Informe seu nome completo.</span>
+        </div>
+
+        <div class="row">
           <div class="field">
-            <label for="nome_responsavel">Nome completo</label>
-            <i class="ti ti-user field-icon"></i>
-            <input id="nome_responsavel" name="nome_responsavel" type="text" placeholder="Seu nome completo" autocomplete="name" required>
-            <span class="error" id="erro-nome_responsavel">Informe seu nome completo.</span>
+            <label for="cpf">CPF</label>
+            <i class="ti ti-id-badge field-icon"></i>
+            <input id="cpf" type="text" placeholder="000.000.000-00" maxlength="14" inputmode="numeric">
+            <span class="error" id="erro-cpf">CPF inválido.</span>
           </div>
-
-          <div class="row">
-            <div class="field">
-              <label for="cpf_responsavel">CPF</label>
-              <i class="ti ti-id-badge field-icon"></i>
-              <input id="cpf_responsavel" name="cpf_responsavel" type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" required>
-              <span class="error" id="erro-cpf_responsavel">CPF inválido.</span>
-            </div>
-            <div class="field">
-              <label for="rg_responsavel">RG</label>
-              <i class="ti ti-id field-icon"></i>
-              <input id="rg_responsavel" name="rg_responsavel" type="text" placeholder="Número do RG" maxlength="20" required>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label for="data_nascimento_responsavel">Data de nascimento</label>
-              <i class="ti ti-calendar field-icon"></i>
-              <input id="data_nascimento_responsavel" name="data_nascimento_responsavel" type="date" autocomplete="bday" required>
-            </div>
-            <div class="field">
-              <label for="pagamento_responsavel">Forma de pagamento</label>
-              <i class="ti ti-credit-card field-icon"></i>
-              <select id="pagamento_responsavel" name="pagamento_responsavel" required>
-                <option value="" disabled selected>Selecione</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- ───────── Contato ───────── -->
-          <p class="section-label">Contato</p>
-
-          <div class="row">
-            <div class="field">
-              <label for="email_responsavel">E-mail</label>
-              <i class="ti ti-mail field-icon"></i>
-              <input id="email_responsavel" name="email_responsavel" type="email" placeholder="seu@email.com" autocomplete="email" required>
-              <span class="error" id="erro-email_responsavel">Informe um e-mail válido.</span>
-            </div>
-            <div class="field">
-              <label for="telefone_responsavel">Telefone (opcional)</label>
-              <i class="ti ti-phone field-icon"></i>
-              <input id="telefone_responsavel" name="telefone_responsavel" type="tel" inputmode="tel" placeholder="(00) 00000-0000" maxlength="15" autocomplete="tel">
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- ───────── Endereço ───────── -->
-          <p class="section-label">Endereço</p>
-
-          <div class="row">
-            <div class="field">
-              <label for="cep_responsavel">CEP</label>
-              <i class="ti ti-map-pin field-icon"></i>
-              <input id="cep_responsavel" name="cep_responsavel" type="text" inputmode="numeric" placeholder="00000-000" maxlength="9" autocomplete="postal-code" required>
-            </div>
-            <div class="field">
-              <label for="bairro_responsavel">Bairro</label>
-              <i class="ti ti-building-community field-icon"></i>
-              <input id="bairro_responsavel" name="bairro_responsavel" type="text" placeholder="Seu bairro" required>
-            </div>
-          </div>
-
-          <div class="row row-uf">
-            <div class="field">
-              <label for="estado_responsavel">Estado</label>
-              <i class="ti ti-map-2 field-icon"></i>
-              <select id="estado_responsavel" name="estado_responsavel" required>
-                <option value="" disabled selected>UF</option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="cidade_responsavel">Cidade</label>
-              <i class="ti ti-building field-icon"></i>
-              <input id="cidade_responsavel" name="cidade_responsavel" type="text" placeholder="Sua cidade" autocomplete="address-level2" required>
-            </div>
-          </div>
-
           <div class="field">
-            <label for="rua_responsavel">Rua</label>
-            <i class="ti ti-road field-icon"></i>
-            <input id="rua_responsavel" name="rua_responsavel" type="text" placeholder="Nome da rua" autocomplete="address-line1" required>
+            <label for="idade">Idade</label>
+            <i class="ti ti-calendar field-icon"></i>
+            <input id="idade" type="number" placeholder="Ex: 28" min="0" max="120">
+            <span class="error" id="erro-idade">Informe sua idade.</span>
           </div>
+        </div>
 
-          <div class="field">
-            <label for="endereco_responsavel">Endereço (número e complemento)</label>
-            <i class="ti ti-home field-icon"></i>
-            <input id="endereco_responsavel" name="endereco_responsavel" type="text" placeholder="Ex.: 123, apto 45" autocomplete="address-line2" required>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <i class="ti ti-mail field-icon"></i>
+          <input id="email" type="email" placeholder="seu@email.com">
+          <span class="error" id="erro-email">Informe um e-mail válido.</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="section-label">Segurança</p>
+
+        <div class="field">
+          <label for="senha">Senha</label>
+          <i class="ti ti-lock field-icon"></i>
+          <div class="password-control">
+            <input id="senha" type="password" placeholder="Digite sua senha" maxlength="16">
+            <button type="button" onclick="toggleSenha()" id="btn-olho" aria-label="Mostrar senha" aria-pressed="false">
+              <i class="ti ti-eye" id="icone-olho"></i>
+            </button>
           </div>
+          <span class="error" id="erro-senha">A senha não atende aos requisitos.</span>
+          <ul class="requisitos" id="requisitos">
+            <li id="req-tamanho"><i class="ti ti-circle"></i> Entre 8 e 16 caracteres</li>
+            <li id="req-maiuscula"><i class="ti ti-circle"></i> Pelo menos 1 letra maiúscula</li>
+            <li id="req-especial"><i class="ti ti-circle"></i> Pelo menos 1 caractere especial (!@#$%...)</li>
+          </ul>
+        </div>
 
-          <div class="divider"></div>
+        <button class="btn" onclick="entrar()">Continuar →</button>
 
-          <!-- ───────── Segurança ───────── -->
-          <p class="section-label">Segurança</p>
+        <p class="footer-note">
+          <a href="#">Política de privacidade</a>
+        </p>
 
-          <div class="field">
-            <label for="senha">Senha</label>
-            <i class="ti ti-lock field-icon"></i>
-            <div class="password-control">
-              <input id="senha" name="senha" type="password" placeholder="Digite sua senha" maxlength="128" autocomplete="new-password" required>
-              <button type="button" onclick="toggleSenha()" id="btn-olho" aria-label="Mostrar senha" aria-pressed="false">
-                <i class="ti ti-eye" id="icone-olho"></i>
-              </button>
-            </div>
-            <span class="error" id="erro-senha">A senha não atende aos requisitos.</span>
-            <ul class="requisitos" id="requisitos">
-              <li id="req-tamanho"><i class="ti ti-circle"></i> Pelo menos 8 caracteres</li>
-              <li id="req-maiuscula"><i class="ti ti-circle"></i> Pelo menos 1 letra maiúscula</li>
-              <li id="req-especial"><i class="ti ti-circle"></i> Pelo menos 1 caractere especial (!@#$%...)</li>
-            </ul>
-          </div>
-
-          <button class="btn" type="submit">Continuar →</button>
-
-          <p class="footer-note" id="msg-status" role="status"></p>
-          <p class="footer-note">Já tem conta? <a href="entrar.html">Entrar</a></p>
-          <p class="footer-note"><a href="#">Política de privacidade</a></p>
-        </form>
       </div>
     </div>
   </div>
+
+  <script src="responsavel.js"></script>
+
 </body>
 </html>

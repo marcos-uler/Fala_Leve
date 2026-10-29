@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro — Paciente</title>
+  <title>Login Paciente</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link rel="stylesheet" href="style.css">
   <script src="paciente.js" defer></script>
@@ -25,113 +25,40 @@
     </section>
 
     <div class="card-content">
-      <form class="patient-form" id="form-paciente" novalidate>
+      <div class="patient-form">
         <p class="section-label">Identificação</p>
 
         <div class="field field-wide">
-          <label for="nome_paciente">Nome completo</label>
-          <input id="nome_paciente" name="nome_paciente" type="text" placeholder="Seu nome" required>
+          <label for="nome">Nome completo</label>
+          <input id="nome" type="text" placeholder="Seu nome">
         </div>
 
         <div class="row">
           <div class="field">
-            <label for="cpf_paciente">CPF</label>
-            <input id="cpf_paciente" name="cpf_paciente" type="text" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" required>
+            <label for="cpf">CPF</label>
+            <input id="cpf" type="text" placeholder="000.000.000-00" maxlength="14">
           </div>
           <div class="field">
-            <label for="data_nascimento_paciente">Data de nascimento</label>
-            <input id="data_nascimento_paciente" name="data_nascimento_paciente" type="date" required>
+            <label for="idade">Idade</label>
+            <input id="idade" type="number" placeholder="Ex: 28" min="0" max="120">
           </div>
         </div>
 
-        <p class="section-label">Contato</p>
-
-        <div class="row">
-          <div class="field">
-            <label for="telefone_paciente">Telefone</label>
-            <input id="telefone_paciente" name="telefone_paciente" type="tel" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric">
-          </div>
-          <div class="field">
-            <label for="email_paciente">E-mail</label>
-            <input id="email_paciente" name="email_paciente" type="email" placeholder="seu@email.com" required>
-          </div>
+        <div class="field field-wide">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" placeholder="seu@email.com">
         </div>
-
-        <p class="section-label">Endereço</p>
-
-        <div class="row">
-          <div class="field">
-            <label for="cep_paciente">CEP</label>
-            <input id="cep_paciente" name="cep_paciente" type="text" placeholder="00000-000" maxlength="9" inputmode="numeric" required>
-          </div>
-          <div class="field">
-            <label for="estado_paciente">Estado</label>
-            <select id="estado_paciente" name="estado_paciente" required>
-              <option value="">Selecione</option>
-              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
-              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
-              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
-              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
-              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
-              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
-              <option>SP</option><option>SE</option><option>TO</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="field">
-            <label for="cidade_paciente">Cidade</label>
-            <input id="cidade_paciente" name="cidade_paciente" type="text" placeholder="Sua cidade" required>
-          </div>
-          <div class="field">
-            <label for="bairro_paciente">Bairro</label>
-            <input id="bairro_paciente" name="bairro_paciente" type="text" placeholder="Seu bairro" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="field">
-            <label for="rua_paciente">Rua</label>
-            <input id="rua_paciente" name="rua_paciente" type="text" placeholder="Nome da rua" required>
-          </div>
-          <div class="field">
-            <label for="endereco_paciente">Endereço</label>
-            <input id="endereco_paciente" name="endereco_paciente" type="text" placeholder="Número e complemento" required>
-          </div>
-        </div>
-
-        <p class="section-label">Tratamento</p>
-
-        <div class="row">
-          <div class="field">
-            <label for="data_inicio_tratamento">Início do tratamento</label>
-            <input id="data_inicio_tratamento" name="data_inicio_tratamento" type="date" required>
-          </div>
-          <div class="field">
-            <label for="pagamento_paciente">Forma de pagamento</label>
-            <select id="pagamento_paciente" name="pagamento_paciente" required>
-              <option value="">Selecione</option>
-              <option value="1">Pix</option>
-              <option value="2">Cartão de crédito</option>
-              <option value="3">Cartão de débito</option>
-              <option value="4">Boleto</option>
-            </select>
-          </div>
-        </div>
-
-        <p class="section-label">Acesso</p>
 
         <div class="field field-wide">
           <label for="senha">Senha</label>
           <div class="password-wrap">
-            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" minlength="8" maxlength="128" required>
+            <input id="senha" type="password" placeholder="Digite sua senha" autocomplete="new-password" minlength="8" maxlength="16" pattern="(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}" title="Use de 8 a 16 caracteres, incluindo uma letra maiúscula e um caractere especial">
             <button class="password-toggle" id="toggleSenha" type="button" aria-label="Mostrar senha" aria-pressed="false">
               <i class="ti ti-eye" aria-hidden="true"></i>
             </button>
           </div>
           <ul class="password-requirements" aria-label="Requisitos da senha">
-            <li id="req-length"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos 8 caracteres</span></li>
+            <li id="req-length"><i class="ti ti-circle" aria-hidden="true"></i><span>De 8 a 16 caracteres</span></li>
             <li id="req-uppercase"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos uma letra maiúscula</span></li>
             <li id="req-special"><i class="ti ti-circle" aria-hidden="true"></i><span>Pelo menos um caractere especial</span></li>
           </ul>
@@ -139,16 +66,12 @@
 
         <div class="divider"></div>
 
-        <button class="btn" type="submit">Continuar →</button>
+        <button class="btn" onclick="enviarFormulario()">Continuar →</button>
 
-        <p class="footer-note" id="msg-status" role="status"></p>
         <p class="footer-note">
-          Já tem conta? <a href="entrar.html">Entrar</a>
+          Ao continuar, você concorda com nossa <a href="#">política de privacidade</a>. Seus dados jamais serão compartilhados.
         </p>
-        <p class="footer-note">
-          Ao continuar, você concorda com nossa <a href="#">política de privacidade</a>.
-        </p>
-      </form>
+      </div>
     </div>
   </div>
 </body>
