@@ -1,13 +1,17 @@
-const API = "/psicologos/login";
+const API  = "/responsaveis/login";
+const HOME = "../index.html";
 
 const form       = document.getElementById('form-login');
+const emailInput = document.getElementById('email_responsavel');
 const senhaInput = document.getElementById('senha');
 const msgStatus  = document.getElementById('msg-status');
 
 function toggleSenha() {
   const icone = document.getElementById('icone-olho');
-  senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
-  icone.className = senhaInput.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
+  const mostrar = senhaInput.type === 'password';
+  senhaInput.type = mostrar ? 'text' : 'password';
+  icone.className = mostrar ? 'ti ti-eye-off' : 'ti ti-eye';
+  document.getElementById('btn-olho').setAttribute('aria-pressed', String(mostrar));
 }
 
 function mostrarStatus(texto, erro = true) {
@@ -20,9 +24,14 @@ form.addEventListener('submit', async (event) => {
   mostrarStatus('');
 
   const payload = {
-    email_psicologo: document.getElementById('email_psicologo').value.trim(),
-    senha:           senhaInput.value,
+    email_responsavel: emailInput.value.trim(),
+    senha:             senhaInput.value,
   };
+
+  if (!payload.email_responsavel || !payload.senha) {
+    mostrarStatus('Preencha e-mail e senha.');
+    return;
+  }
 
   try {
     const resp = await fetch(API, {
@@ -33,11 +42,9 @@ form.addEventListener('submit', async (event) => {
 
     if (resp.status === 200) {
       const dados = await resp.json();
-      // Guarda os dados do psicólogo logado no navegador
-      localStorage.setItem('psicologo', JSON.stringify(dados));
-      mostrarStatus(`Bem-vindo(a), ${dados.nome_psicologo}!`, false);
-      // Redireciona para o painel (troque pelo caminho real do seu painel)
-      setTimeout(() => { window.location.href = '../painel/painel.html'; }, 800);
+      localStorage.setItem('responsavel', JSON.stringify(dados));
+      mostrarStatus(`Bem-vindo(a), ${dados.nome_responsavel}!`, false);
+      setTimeout(() => { window.location.href = HOME; }, 800);
       return;
     }
 
@@ -45,7 +52,7 @@ form.addEventListener('submit', async (event) => {
     try {
       const err = await resp.json();
       if (typeof err.detail === 'string') detalhe = err.detail;
-    } catch {}
+    } catch { /* resposta sem JSON */ }
     mostrarStatus(detalhe);
   } catch {
     mostrarStatus('Falha de conexão com o servidor.');

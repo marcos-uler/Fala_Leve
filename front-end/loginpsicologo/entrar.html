@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrar — Psicólogo</title>
+  <title>Entrar — Responsável</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
-  <link rel="stylesheet" href="psico.css">
+  <link rel="stylesheet" href="responsavel.css">
   <script src="entrar.js" defer></script>
 </head>
 <body>
@@ -14,10 +14,10 @@
     <div class="card">
 
       <div class="painel-esquerdo">
-        <div class="logo"><i class="ti ti-brain"></i></div>
+        <div class="logo"><i class="ti ti-heart-handshake"></i></div>
         <h1>Entrar na conta</h1>
-        <p class="sub">Acesse seu painel de atendimentos com e-mail e senha.</p>
-        <div class="badge"><i class="ti ti-shield-check"></i> Área restrita a profissionais</div>
+        <p class="sub">Acesse o acompanhamento de quem você cuida com e-mail e senha.</p>
+        <div class="badge"><i class="ti ti-lock"></i> Dados protegidos e sigilosos</div>
       </div>
 
       <div class="painel-direito">
@@ -25,26 +25,27 @@
           <p class="section-label">Acesso</p>
 
           <div class="field">
-            <label for="email_psicologo">E-mail profissional</label>
+            <label for="email_responsavel">E-mail</label>
             <i class="ti ti-mail field-icon"></i>
-            <input id="email_psicologo" name="email_psicologo" type="email" placeholder="seu@email.com" required autocomplete="username">
+            <input id="email_responsavel" name="email_responsavel" type="email" placeholder="seu@email.com" autocomplete="username" required>
           </div>
 
           <div class="field">
             <label for="senha">Senha</label>
             <i class="ti ti-lock field-icon"></i>
-            <input id="senha" name="senha" type="password" placeholder="Digite sua senha" required autocomplete="current-password">
-            <button type="button" onclick="toggleSenha()" id="btn-olho">
-              <i class="ti ti-eye" id="icone-olho"></i>
-            </button>
+            <div class="password-control">
+              <input id="senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+              <button type="button" onclick="toggleSenha()" id="btn-olho" aria-label="Mostrar senha" aria-pressed="false">
+                <i class="ti ti-eye" id="icone-olho"></i>
+              </button>
+            </div>
           </div>
 
           <button class="btn" type="submit">Entrar →</button>
 
-          <p class="footer-note" id="msg-status" role="status" style="margin-top:1rem;color:#c0392b;font-size:13px;text-align:center;"></p>
-
-          <p class="footer-note" style="margin-top:1rem;text-align:center;">
-            Não tem conta? <a href="login_psicologo.html">Cadastre-se</a>
+          <p class="footer-note" id="msg-status" role="status"></p>
+          <p class="footer-note">
+            Não tem conta? <a href="responsavel.html">Cadastre-se</a>
           </p>
         </form>
       </div>
