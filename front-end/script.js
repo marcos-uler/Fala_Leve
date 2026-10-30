@@ -1,65 +1,51 @@
-const signupSection = document.querySelector(".signup");
+(() => {
+    const menuButton = document.querySelector('.nav-toggle');
+    const navigation = document.querySelector('.main-nav');
+    const navLinks = document.querySelectorAll('.main-nav a');
+    const sections = document.querySelectorAll('main section[id]');
+    const yearElement = document.getElementById('current-year');
 
-if (signupSection && "IntersectionObserver" in window) {
-    const signupObserver = new IntersectionObserver((entries, observer) => {
-        for (const entry of entries) {
-            if (entry.isIntersecting) {
-                signupSection.classList.add("is-visible");
-                observer.unobserve(signupSection);
-            }
-        }
-    }, { threshold: 0.18 });
+    if (yearElement) {
+        yearElement.textContent = String(new Date().getFullYear());
+    }
 
-    signupObserver.observe(signupSection);
-} else if (signupSection) {
-    signupSection.classList.add("is-visible");
-}
-const heroMessage = document.querySelector(".hero-content p");
+    if (menuButton && navigation) {
+        const closeMenu = () => {
+            menuButton.setAttribute('aria-expanded', 'false');
+            menuButton.setAttribute('aria-label', 'Abrir menu');
+            navigation.classList.remove('is-open');
+        };
 
-if (heroMessage) {
-    const message = heroMessage.textContent.replace(/\s+/g, " ").trim();
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    heroMessage.setAttribute("aria-label", message);
-
-    if (reducedMotion) {
-        heroMessage.textContent = message;
-    } else {
-        heroMessage.replaceChildren();
-        heroMessage.classList.add("message-reveal-ready");
-
-        const characters = Array.from(message);
-        const reveal = document.createElement("span");
-        reveal.className = "message-reveal";
-        reveal.setAttribute("aria-hidden", "true");
-
-        characters.forEach((character, index) => {
-            const letter = document.createElement("span");
-            letter.className = "message-letter";
-            letter.textContent = character === " " ? "\u00a0" : character;
-            letter.style.animationDelay = `${(index / Math.max(characters.length - 1, 1)) * 4}s`;
-            reveal.append(letter);
+        menuButton.addEventListener('click', () => {
+            const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+            menuButton.setAttribute('aria-expanded', String(!isOpen));
+            menuButton.setAttribute('aria-label', isOpen ? 'Abrir menu' : 'Fechar menu');
+            navigation.classList.toggle('is-open', !isOpen);
         });
 
-        heroMessage.append(reveal);
+        navLinks.forEach((link) => link.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeMenu();
+        });
+        document.addEventListener('click', (event) => {
+            if (!navigation.contains(event.target) && !menuButton.contains(event.target)) closeMenu();
+        });
     }
-}
 
-const signupCards = document.querySelectorAll(".signup-card");
+    if ('IntersectionObserver' in window && sections.length && navLinks.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const sectionId = entry.target.id;
+                navLinks.forEach((link) => {
+                    const isActive = link.getAttribute('href') === `#${sectionId}`;
+                    link.classList.toggle('active', isActive);
+                    if (isActive) link.setAttribute('aria-current', 'location');
+                    else link.removeAttribute('aria-current');
+                });
+            });
+        }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
 
-signupCards.forEach((card, index) => {
-    const theme = ["theme-red", "theme-green", "theme-blue"][index];
-    if (!theme) return;
-
-    const themes = ["theme-red", "theme-green", "theme-blue"];
-    const applyTheme = () => {
-        document.body.classList.remove(...themes);
-        document.body.classList.add(theme);
-    };
-    const clearTheme = () => document.body.classList.remove(...themes);
-
-    card.addEventListener("pointerenter", applyTheme);
-    card.addEventListener("pointerleave", clearTheme);
-    card.addEventListener("focus", applyTheme);
-    card.addEventListener("blur", clearTheme);
-});
+        sections.forEach((section) => observer.observe(section));
+    }
+})();
